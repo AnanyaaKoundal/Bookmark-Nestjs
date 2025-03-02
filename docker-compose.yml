@@ -1,0 +1,30 @@
+version: '3.8'  
+services:
+  dev-db:
+    image: postgres:13  # Corrected 'images' to 'image'
+    ports:
+      - "5434:5432"  # Ensure the port is a string in list format
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    networks:
+      - freecodecamp
+
+  test-db:
+    image: postgres:13  # Corrected 'images' to 'image'
+    ports:
+      - "5435:5432"  # Ensure the port is a string in list format
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 5
+    networks:
+      - freecodecamp
+  
+networks:
+  freecodecamp:
